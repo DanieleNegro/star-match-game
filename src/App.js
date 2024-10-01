@@ -1,14 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState } from 'react';
 import './App.css';
-import { random, range, sum } from './utils/MathScience';
+import { random, randomSumIn, range, sum } from './utils/MathScience';
 import PlayNumber from './component/PlayNumber';
 import StarsDisplay from './component/StarsDisplay';
+import PlayAgain from './component/PlayAgain';
 
-function StarMatch() {
-  const maxButtons = 9;
-  const [stars, setStars] = useState(random(1, maxButtons));
-  const [availableNums, setAvailableNums] = useState(range(1, maxButtons));
+const MAX_BUTTONS = 9;
+
+function useStarMatch() {
+  const [stars, setStars] = useState(random(1, MAX_BUTTONS));
+  const [availableNums, setAvailableNums] = useState(range(1, MAX_BUTTONS));
   const [candidateNums, setCandidateNums] = useState([]);
 
   const candidatesAreWrong = sum(candidateNums) > stars;
@@ -20,6 +22,43 @@ function StarMatch() {
     return 'available';
   };
 
+  const onNumberClick = (number = 0, status = 'available') => {
+    if (status === 'used') return;
+    const newCandidateNums =
+      status === 'available'
+        ? candidateNums.concat(number)
+        : candidateNums.filter((cn) => cn !== number);
+    if (sum(newCandidateNums) !== stars) {
+      setCandidateNums(newCandidateNums);
+    } else {
+      const newAvailableNums = availableNums.filter(
+        (n) => !newCandidateNums.includes(n)
+      );
+      setStars(randomSumIn(newAvailableNums, 9));
+      setAvailableNums(newAvailableNums);
+      setCandidateNums([]);
+    }
+  };
+
+  const resetGame = () => {
+    setStars(random(1, MAX_BUTTONS));
+    setAvailableNums(range(1, MAX_BUTTONS));
+    setCandidateNums([]);
+  };
+
+  return {
+    stars,
+    gameIsDone: availableNums.length === 0,
+    numberStatus,
+    onNumberClick,
+    resetGame,
+  };
+}
+
+function StarMatch() {
+  const { stars, gameIsDone, numberStatus, onNumberClick, resetGame } =
+    useStarMatch();
+
   return (
     <div className="game mt-7">
       <div className="help">
@@ -27,14 +66,19 @@ function StarMatch() {
       </div>
       <div className="body">
         <div className="left">
-          <StarsDisplay stars={stars} />
+          {gameIsDone ? (
+            <PlayAgain resetGame={resetGame} />
+          ) : (
+            <StarsDisplay stars={stars} />
+          )}
         </div>
         <div className="right">
-          {range(1, maxButtons).map((value) => (
+          {range(1, MAX_BUTTONS).map((value) => (
             <PlayNumber
               key={value}
               number={value}
               status={numberStatus(value)}
+              onNumberClick={onNumberClick}
             />
           ))}
         </div>

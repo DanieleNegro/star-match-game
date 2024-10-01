@@ -62,3 +62,16 @@
   font-weight: bold;
   margin: 15px;
 }
+.available {
+  background-color: lightgray;
+}
+
+.used{
+  background-color: lightgreen;
+}
+.wrong{
+  background-color: lightcoral;
+}
+.candidate{
+  background-color: deepskyblue;
+}
