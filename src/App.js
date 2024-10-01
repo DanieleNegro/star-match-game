@@ -49,7 +49,9 @@ function Game({ startNewGame }) {
   return (
     <div className="game mt-7">
       <div className="help">
+        <h1>Star Match</h1>
         <p>Pick 1 or more numbers that sum to the number of stars</p>
+        <p>All numbers must be green to win!</p>
       </div>
       <div className="body">
         <div className="left">
