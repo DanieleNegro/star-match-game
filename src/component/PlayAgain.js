@@ -1,5 +1,6 @@
 import React from 'react';
 import '../App.css';
+import PropTypes from 'prop-types';
 import { gameType } from '../utils/GameStatus';
 
 function PlayAgain({ resetGame, gameStatus }) {
@@ -18,5 +19,10 @@ function PlayAgain({ resetGame, gameStatus }) {
     </div>
   );
 }
+
+PlayAgain.propTypes = {
+  gameStatus: PropTypes.string,
+  resetGame: PropTypes.func,
+};
 
 export default PlayAgain;

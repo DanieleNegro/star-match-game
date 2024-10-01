@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { range } from '../utils/MathScience';
 
 function StarsDisplay({ stars = 0 }) {
@@ -10,5 +11,9 @@ function StarsDisplay({ stars = 0 }) {
     </div>
   );
 }
+
+StarsDisplay.propTypes = {
+  stars: PropTypes.number,
+};
 
 export default StarsDisplay;
