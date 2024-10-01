@@ -75,3 +75,9 @@
 .candidate{
   background-color: deepskyblue;
 }
+.lost{
+  color: red;
+}
+.won{
+  color: green;
+}
