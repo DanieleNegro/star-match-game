@@ -1,6 +1,8 @@
 # Getting Started with Star Match React App
 
-This is a simple game implemented by React JS.
+This is a version of the game created by Samer Buna in his course:
+
+https://www.pluralsight.com/courses/react-js-getting-started
 
 The main aim of Star Match is to ejoy people with math operations.
 
